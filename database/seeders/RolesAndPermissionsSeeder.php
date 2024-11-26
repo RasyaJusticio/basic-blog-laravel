@@ -15,11 +15,15 @@ class RolesAndPermissionsSeeder extends Seeder
     public function __construct()
     {
         $this->PERMISSIONS = [
-            'access-dashboard'
+            'access-dashboard',
+
+            'role-create',
+            'role-update',
+            'role-delete'
         ];
 
         $this->ROLES = [
-            'admin' => ['access-dashboard'],
+            'admin' => ['access-dashboard', 'role-create', 'role-update', 'role-delete'],
             'author' => ['access-dashboard'],
             'user' => ['']
         ];
