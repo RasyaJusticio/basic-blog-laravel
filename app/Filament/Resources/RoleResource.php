@@ -11,6 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleResource extends Resource
@@ -23,7 +24,15 @@ class RoleResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->unique(),
+                Forms\Components\Select::make('permissions')
+                    ->relationship(name: 'permissions', titleAttribute: 'name')
+                    ->multiple()
+                    ->searchable()
+                    ->preload()
+                    ->native(false)
             ]);
     }
 
@@ -31,13 +40,27 @@ class RoleResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('permissions.name')
+                    ->badge()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('permissions')
+                    ->relationship('permissions', 'name')
+                    ->multiple()
+                    ->searchable()
+                    ->preload()
+                    ->native(false)
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
