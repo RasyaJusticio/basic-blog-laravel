@@ -20,11 +20,26 @@ class RolesAndPermissionsSeeder extends Seeder
             'role-view',
             'role-create',
             'role-update',
-            'role-delete'
+            'role-delete',
+
+            'permission-view',
+            'permission-create',
+            'permission-update',
+            'permission-delete',
         ];
 
         $this->ROLES = [
-            'admin' => ['access-dashboard', 'role-create', 'role-update', 'role-delete', 'role-view'],
+            'admin' => [
+                'access-dashboard',
+                'role-create',
+                'role-update',
+                'role-delete',
+                'role-view',
+                'permission-view',
+                'permission-create',
+                'permission-update',
+                'permission-delete',
+            ],
             'author' => ['access-dashboard'],
             'user' => ['']
         ];
